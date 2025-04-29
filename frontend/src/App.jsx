@@ -49,6 +49,7 @@ import WorkspaceDetailPage from './pages/WorkspaceDetailPage';
 import HostDashboardPage from './pages/HostDashboardPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import Navbar from './components/Navbar';
+import { Analytics } from '@vercel/analytics/react';
 
 const App = () => {
   return (
@@ -65,6 +66,7 @@ const App = () => {
             <Route path="/listings" element={<HostDashboardPage />} />
             <Route path="/admin" element={<AdminDashboardPage />} />
           </Routes>
+          <Analytics />
         </main>
       </AuthProvider>
     </ThemeProvider>
