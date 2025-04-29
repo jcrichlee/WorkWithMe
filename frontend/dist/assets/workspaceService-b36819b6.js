@@ -1,1 +1,0 @@
-import{c as s}from"./index-885e2fbb.js";const a={getAll:()=>s.get("/workspaces"),getById:e=>s.get(`/workspaces/${e}`),create:e=>s.post("/workspaces",e),update:(e,t)=>s.put(`/workspaces/${e}`,t),delete:e=>s.delete(`/workspaces/${e}`)};export{a as W};
