@@ -1,6 +1,6 @@
 {
   "appId": "com.workwithme.app",
-  "appName": "WorkWithMe",
+  "appName": "workwithme",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {
