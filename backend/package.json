@@ -17,7 +17,8 @@
     "express": "^4.x",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.x",
-    "morgan": "^1.x"
+    "morgan": "^1.x",
+    "stripe": "^18.0.0"
   },
   "devDependencies": {
     "eslint": "^8.x",
