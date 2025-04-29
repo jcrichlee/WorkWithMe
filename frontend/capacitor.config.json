@@ -1,0 +1,10 @@
+{
+  "appId": "com.workwithme.app",
+  "appName": "WorkWithMe",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://work-with-me-eta.vercel.app/",
+    "cleartext": true
+  }
+}
