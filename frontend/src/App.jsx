@@ -8,7 +8,6 @@ import Navbar from './components/Navbar';
 import Loader from './components/Loader';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Lazy-loaded Pages
@@ -38,7 +37,6 @@ const App = () => (
             </Routes>
           </Suspense>
         </main>
-        <Analytics />
         <SpeedInsights />
       </Router>
     </AuthProvider>
