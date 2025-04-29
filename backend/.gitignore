@@ -35,5 +35,3 @@ coverage/
 *.local
 *.sublime-project
 *.sublime-workspace
-
-.env

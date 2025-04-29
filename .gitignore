@@ -1,37 +1,26 @@
 # Node modules
 node_modules/
-.pnpm-debug.log
-npm-debug.log
-
-# Builds
-dist/
-build/
-
-# Vite output
-.vite/
-
-# Logs
-*.log
-
-# OS trash
-.DS_Store
-Thumbs.db
 
 # Environment variables
 .env
-.env.*
-!.env.example
+.env.local
 
-# Editor folders
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+
+# IDEs
 .vscode/
 .idea/
-*.swp
-
-# Coverage reports
-coverage/
-.nyc_output/
-
-# Others
-*.local
 *.sublime-project
 *.sublime-workspace
+
+# Build
+dist/
+coverage/
