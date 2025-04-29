@@ -50,6 +50,7 @@ import HostDashboardPage from './pages/HostDashboardPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import Navbar from './components/Navbar';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const App = () => {
   return (
@@ -67,6 +68,7 @@ const App = () => {
             <Route path="/admin" element={<AdminDashboardPage />} />
           </Routes>
           <Analytics />
+          <SpeedInsights />
         </main>
       </AuthProvider>
     </ThemeProvider>
