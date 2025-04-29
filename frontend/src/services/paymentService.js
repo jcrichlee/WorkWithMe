@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
 const PaymentService = {
-  createCheckoutSession: (data) => axiosClient.post('/payments/create-checkout-session', data),
+  createCheckoutSession: (bookingData) => axiosClient.post('/payments/create-checkout-session', bookingData),
 };
 
 export default PaymentService;

@@ -1,21 +1,26 @@
-// src/contexts/AuthContext.jsx
-import AuthService from '../services/authService';
 import { createContext, useState, useEffect } from 'react';
+import AuthService from '../services/authService';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     AuthService.getCurrentUser()
-      .then(res => setUser(res.data))
-      .catch(() => setUser(null));
+      .then((res) => {
+        setUser(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setUser(null);
+        setLoading(false);
+      });
   }, []);
 
-  const login = async (data) => {
-    const res = await AuthService.login(data);
-    setUser(res.data);
+  const login = (userData) => {
+    setUser(userData);
   };
 
   const logout = async () => {
@@ -24,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

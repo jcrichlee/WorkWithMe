@@ -1,8 +1,8 @@
 import axiosClient from './axiosClient';
 
 const BookingService = {
-  book: (data) => axiosClient.post('/bookings', data),
-  myBookings: () => axiosClient.get('/bookings/me'),
+  createBooking: (bookingData) => axiosClient.post('/bookings', bookingData),
+  getMyBookings: () => axiosClient.get('/bookings/my'),
 };
 
 export default BookingService;

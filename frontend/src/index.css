@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom global styles */
+/* Extra custom global styles */
 body {
-  @apply bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100;
+  font-family: 'Inter', sans-serif;
+}
+.input {
+  @apply w-full p-3 border rounded;
+}
+.button-primary {
+  @apply w-full bg-primary text-white py-3 rounded hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary;
 }

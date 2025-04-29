@@ -1,59 +1,62 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/authService';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [userData, setUserData] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Connect to real register API
-    navigate('/login');
+    try {
+      await AuthService.register(userData);
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to register');
+    }
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen">
-      <h2 className="text-2xl font-bold mb-6">Register</h2>
+    <section className="flex flex-col items-center justify-center min-h-screen p-6">
+      <h1 className="text-3xl font-bold mb-4">Register at WorkWithMe</h1>
       <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
-          placeholder="Full Name"
-          className="w-full p-3 border rounded"
-          value={form.name}
+          placeholder="Name"
+          value={userData.name}
           onChange={handleChange}
+          className="input"
           required
         />
         <input
           type="email"
           name="email"
           placeholder="Email"
-          className="w-full p-3 border rounded"
-          value={form.email}
+          value={userData.email}
           onChange={handleChange}
+          className="input"
           required
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
-          className="w-full p-3 border rounded"
-          value={form.password}
+          value={userData.password}
           onChange={handleChange}
+          className="input"
           required
         />
-        <button className="w-full p-3 bg-accent text-white rounded hover:bg-blue-700" type="submit">
-          Register
-        </button>
+        <button type="submit" className="button-primary">Register</button>
+        {error && <p className="text-red-500">{error}</p>}
       </form>
     </section>
   );
 };
 
 export default RegisterPage;
-// This code defines a registration page for a web application. It includes a form where users can input their full name, email, and password. Upon submission, the form data is currently set to navigate to the login page, but it is intended to be connected to a real registration API in the future. The page is styled using Tailwind CSS classes for a clean and modern look.
-// The form includes validation to ensure all fields are filled out before submission. The component uses React hooks for state management and navigation.

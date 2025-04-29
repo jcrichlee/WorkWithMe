@@ -1,40 +1,25 @@
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
 import { AuthContext } from '../contexts/AuthContext';
-import { FaMoon, FaSun } from 'react-icons/fa';
 
 const Navbar = () => {
-  const { toggleTheme, theme } = useContext(ThemeContext);
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-primary text-white">
-      <Link to="/" className="text-2xl font-bold text-accent">
-        WorkWithMe
-      </Link>
-      <div className="flex items-center gap-6">
-        <button onClick={toggleTheme}>
-          {theme === 'light' ? <FaMoon /> : <FaSun />}
-        </button>
-
+    <nav className="flex justify-between items-center p-4 shadow bg-white">
+      <Link to="/" className="text-2xl font-bold text-primary">WorkWithMe</Link>
+      <div className="flex gap-4">
         {user ? (
           <>
-            <Link to="/listings" className="hover:text-accent">
-              My Listings
-            </Link>
-            <button onClick={logout} className="hover:text-accent">
-              Logout
-            </button>
+            <Link to="/workspaces" className="hover:underline">Workspaces</Link>
+            <Link to="/host" className="hover:underline">Host</Link>
+            {user.role === 'admin' && <Link to="/admin" className="hover:underline">Admin</Link>}
+            <button onClick={logout} className="hover:underline text-red-500">Logout</button>
           </>
         ) : (
           <>
-            <Link to="/login" className="hover:text-accent">
-              Login
-            </Link>
-            <Link to="/register" className="hover:text-accent">
-              Register
-            </Link>
+            <Link to="/login" className="hover:underline">Login</Link>
+            <Link to="/register" className="hover:underline">Register</Link>
           </>
         )}
       </div>
