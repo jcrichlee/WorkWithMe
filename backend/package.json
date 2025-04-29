@@ -11,16 +11,17 @@
     "heroku-postbuild": "echo 'No build step required for backend.'"
   },
   "dependencies": {
-    "express": "^4.x",
-    "mongoose": "^7.x",
-    "dotenv": "^16.x",
-    "cors": "^2.x",
     "cookie-parser": "^1.x",
+    "cors": "^2.x",
+    "dotenv": "^16.x",
+    "express": "^4.x",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.x",
     "morgan": "^1.x"
   },
   "devDependencies": {
-    "nodemon": "^3.x",
     "eslint": "^8.x",
+    "nodemon": "^3.x",
     "prettier": "^3.x"
   }
 }
