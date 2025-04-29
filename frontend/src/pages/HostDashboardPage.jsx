@@ -1,16 +1,37 @@
-import { mockWorkspaces } from '../services/mockData';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import WorkspaceService from '../services/workspaceService';
 import WorkspaceCard from '../components/WorkspaceCard';
+import Loader from '../components/Loader';
 
 const HostDashboardPage = () => {
+  const { user } = useContext(AuthContext);
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user) {
+      WorkspaceService.getAll()
+        .then((res) => {
+          const mine = res.data.filter(ws => ws.user === user._id);
+          setListings(mine);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoading(false);
+        });
+    }
+  }, [user]);
+
+  if (loading) return <Loader />;
+
   return (
     <section className="p-6">
-      <h2 className="text-3xl font-bold mb-6">Manage Your Listings</h2>
-      <button className="mb-6 px-6 py-3 bg-accent text-white rounded hover:bg-blue-700">
-        Add New Workspace
-      </button>
+      <h1 className="text-2xl font-bold mb-6">My Hosted Workspaces</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {mockWorkspaces.map((workspace) => (
-          <WorkspaceCard key={workspace.id} workspace={workspace} />
+        {listings.map((workspace) => (
+          <WorkspaceCard key={workspace._id} workspace={workspace} />
         ))}
       </div>
     </section>

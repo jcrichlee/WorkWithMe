@@ -1,5 +1,11 @@
 import express from 'express';
-import { createWorkspace, getWorkspaces, getWorkspaceById, updateWorkspace, deleteWorkspace } from '../controllers/workspaceController.js';
+import {
+  createWorkspace,
+  getWorkspaces,
+  getWorkspaceById,
+  updateWorkspace,
+  deleteWorkspace,
+} from '../controllers/workspaceController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -10,7 +16,7 @@ router.route('/')
 
 router.route('/:id')
   .get(getWorkspaceById)
-  .patch(protect, updateWorkspace)
+  .put(protect, updateWorkspace)
   .delete(protect, deleteWorkspace);
 
 export default router;

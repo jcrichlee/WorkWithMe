@@ -1,31 +1,39 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import WorkspaceService from '../services/workspaceService';
 import BookingForm from '../components/BookingForm';
+import Loader from '../components/Loader';
 
 const WorkspaceDetailPage = () => {
   const { id } = useParams();
   const [workspace, setWorkspace] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     WorkspaceService.getById(id)
-      .then(res => setWorkspace(res.data))
-      .catch(() => setWorkspace(null));
+      .then((res) => {
+        setWorkspace(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, [id]);
 
-  if (!workspace) return <div className="p-6">Workspace not found.</div>;
+  if (loading) return <Loader />;
+
+  if (!workspace) return <div className="p-6">Workspace not found</div>;
 
   return (
     <section className="p-6">
-      <h2 className="text-3xl font-bold mb-6">{workspace.title}</h2>
-      <img src={workspace.image || '/default-workspace.jpg'} alt={workspace.title} className="w-full h-64 object-cover rounded mb-4" />
-      <p className="text-lg text-gray-700 mb-2">Location: {workspace.location}</p>
-      <p className="text-lg text-accent font-bold mb-4">${workspace.price} / day</p>
+      <h1 className="text-2xl font-bold">{workspace.title}</h1>
+      <img src={workspace.image || '/default.jpg'} alt={workspace.title} className="w-full h-64 object-cover rounded my-4" />
+      <p className="mb-2 text-gray-600">{workspace.location}</p>
+      <p className="text-primary font-bold">${workspace.price}/day</p>
       <BookingForm workspaceId={workspace._id} />
     </section>
   );
 };
 
 export default WorkspaceDetailPage;
-// This page displays the details of a specific workspace, including its title, image, location, and price.
-// It uses the `useParams` hook to get the workspace ID from the URL and fetches the workspace data using the `WorkspaceService`. If the workspace is not found, it displays a message indicating that. Otherwise, it renders the workspace details along with a booking form.

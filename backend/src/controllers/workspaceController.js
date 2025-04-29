@@ -1,15 +1,13 @@
 import Workspace from '../models/Workspace.js';
 
 export const createWorkspace = async (req, res) => {
-  const { title, location, price, amenities, image } = req.body;
-  const workspace = await Workspace.create({
-    title, location, price, amenities, image, user: req.user.id
-  });
-  res.status(201).json(workspace);
+  const workspace = new Workspace({ ...req.body, user: req.user._id });
+  const created = await workspace.save();
+  res.status(201).json(created);
 };
 
 export const getWorkspaces = async (req, res) => {
-  const workspaces = await Workspace.find({});
+  const workspaces = await Workspace.find();
   res.json(workspaces);
 };
 
@@ -18,37 +16,35 @@ export const getWorkspaceById = async (req, res) => {
   if (workspace) {
     res.json(workspace);
   } else {
-    res.status(404).json({ message: 'Workspace not found' });
+    res.status(404);
+    throw new Error('Workspace not found');
   }
 };
 
 export const updateWorkspace = async (req, res) => {
   const workspace = await Workspace.findById(req.params.id);
+
   if (workspace) {
-    if (workspace.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
     workspace.title = req.body.title || workspace.title;
     workspace.location = req.body.location || workspace.location;
     workspace.price = req.body.price || workspace.price;
-    workspace.amenities = req.body.amenities || workspace.amenities;
     workspace.image = req.body.image || workspace.image;
-    await workspace.save();
-    res.json(workspace);
+    const updated = await workspace.save();
+    res.json(updated);
   } else {
-    res.status(404).json({ message: 'Workspace not found' });
+    res.status(404);
+    throw new Error('Workspace not found');
   }
 };
 
 export const deleteWorkspace = async (req, res) => {
   const workspace = await Workspace.findById(req.params.id);
+
   if (workspace) {
-    if (workspace.user.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
     await workspace.remove();
     res.json({ message: 'Workspace removed' });
   } else {
-    res.status(404).json({ message: 'Workspace not found' });
+    res.status(404);
+    throw new Error('Workspace not found');
   }
 };

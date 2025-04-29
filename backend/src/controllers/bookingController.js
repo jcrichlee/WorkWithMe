@@ -1,17 +1,19 @@
 import Booking from '../models/Booking.js';
 
 export const createBooking = async (req, res) => {
-  const { workspace, startDate, endDate } = req.body;
-  const booking = await Booking.create({
-    user: req.user.id,
-    workspace,
+  const { workspaceId, startDate, endDate } = req.body;
+  const booking = new Booking({
+    user: req.user._id,
+    workspace: workspaceId,
     startDate,
-    endDate,
+    endDate
   });
-  res.status(201).json(booking);
+
+  const created = await booking.save();
+  res.status(201).json(created);
 };
 
 export const getMyBookings = async (req, res) => {
-  const bookings = await Booking.find({ user: req.user.id }).populate('workspace');
+  const bookings = await Booking.find({ user: req.user._id }).populate('workspace');
   res.json(bookings);
 };

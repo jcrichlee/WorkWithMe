@@ -9,36 +9,20 @@ const BookingForm = ({ workspaceId }) => {
     try {
       const res = await PaymentService.createCheckoutSession({
         workspaceId,
-        title: "Booking Workspace", // optional dynamic
-        price: 15, // TODO: Dynamic price from workspace
+        title: "Workspace Booking",
+        price: 50 // Placeholder, should fetch dynamic if needed
       });
       window.location.href = res.data.url;
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        type="date"
-        name="start"
-        className="w-full p-3 border rounded"
-        value={dates.start}
-        onChange={(e) => setDates({ ...dates, start: e.target.value })}
-        required
-      />
-      <input
-        type="date"
-        name="end"
-        className="w-full p-3 border rounded"
-        value={dates.end}
-        onChange={(e) => setDates({ ...dates, end: e.target.value })}
-        required
-      />
-      <button type="submit" className="w-full p-3 bg-accent text-white rounded hover:bg-blue-700">
-        Book Now
-      </button>
+    <form className="space-y-4" onSubmit={handleSubmit}>
+      <input type="date" name="start" value={dates.start} onChange={(e) => setDates({ ...dates, start: e.target.value })} className="input" required />
+      <input type="date" name="end" value={dates.end} onChange={(e) => setDates({ ...dates, end: e.target.value })} className="input" required />
+      <button type="submit" className="button-primary">Book Now</button>
     </form>
   );
 };

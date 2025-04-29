@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createCheckoutSession = async (req, res) => {
@@ -7,17 +8,20 @@ export const createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
-    line_items: [{
-      price_data: {
-        currency: 'usd',
-        product_data: { name: title },
-        unit_amount: price * 100, // Price in cents
+    line_items: [
+      {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: title,
+          },
+          unit_amount: price * 100,
+        },
+        quantity: 1,
       },
-      quantity: 1,
-    }],
+    ],
     success_url: `${process.env.CLIENT_URL}/success`,
     cancel_url: `${process.env.CLIENT_URL}/cancel`,
-    metadata: { workspaceId },
   });
 
   res.json({ url: session.url });

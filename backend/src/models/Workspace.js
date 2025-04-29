@@ -1,12 +1,31 @@
 import mongoose from 'mongoose';
 
-const WorkspaceSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  location: { type: String, required: true },
-  price: { type: Number, required: true },
-  image: { type: String, default: '' },
-  amenities: { type: [String], default: [] },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-}, { timestamps: true });
+const workspaceSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  title: {
+    type: String,
+    required: [true, 'Workspace title is required']
+  },
+  location: {
+    type: String,
+    required: [true, 'Location is required']
+  },
+  image: {
+    type: String,
+    default: ''
+  },
+  price: {
+    type: Number,
+    required: [true, 'Price is required']
+  }
+}, {
+  timestamps: true
+});
 
-export default mongoose.model('Workspace', WorkspaceSchema);
+const Workspace = mongoose.model('Workspace', workspaceSchema);
+
+export default Workspace;
