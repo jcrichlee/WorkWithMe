@@ -28,24 +28,8 @@ const LoginPage = () => {
     <section className="flex flex-col items-center justify-center min-h-screen p-6">
       <h1 className="text-3xl font-bold mb-4">Login to WorkWithMe</h1>
       <form className="w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={credentials.email}
-          onChange={handleChange}
-          className="input"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={handleChange}
-          className="input"
-          required
-        />
+        <input type="email" name="email" value={credentials.email} onChange={handleChange} className="input" placeholder="Email" required />
+        <input type="password" name="password" value={credentials.password} onChange={handleChange} className="input" placeholder="Password" required />
         <button type="submit" className="button-primary">Login</button>
         {error && <p className="text-red-500">{error}</p>}
       </form>

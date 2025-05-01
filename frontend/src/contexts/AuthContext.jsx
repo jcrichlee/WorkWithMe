@@ -1,36 +1,40 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import AuthService from '../services/authService';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const useAuth = () => useContext(AuthContext);
+
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    AuthService.getCurrentUser()
-      .then((res) => {
-        setUser(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setUser(null);
-        setLoading(false);
-      });
-  }, []);
-
-  const login = (userData) => {
-    setUser(userData);
+  const fetchUser = async () => {
+    try {
+      const res = await AuthService.getCurrentUser();
+      setUser(res.data);
+    } catch (err) {
+      setUser(null); // Not authenticated
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const logout = async () => {
-    await AuthService.logout();
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const login = (userData) => setUser(userData);
+  const logout = () => {
+    AuthService.logout();
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
